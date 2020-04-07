@@ -7,7 +7,19 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['krogoth.one']
+
+#TEMPLATE_DIRS = (
+#    '/root/django-websocket-redis/examples/chatserver/templates',
+#)
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'chatserver/templates')],
+        'APP_DIRS': True,
+    },
+]
 
 DATABASES = {
     'default': {
@@ -43,18 +55,22 @@ SESSION_ENGINE = 'redis_sessions.session'
 
 SESSION_REDIS_PREFIX = 'session'
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.static',
-    'django.core.context_processors.request',
-    'ws4redis.context_processors.default',
-)
-
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.app_directories.Loader',
-)
-
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'ws4redis.context_processors.default',
+            ],
+        },
+    },
+]
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
